@@ -1,0 +1,10 @@
+
+Please read the readme.txt first.
+
+Instructions:
+Register the file POP3DLL\EVICT_POP3.dll or compile the project POP3DLL\EVICT_POP3.vbp
+
+Run the file POP3Demo\POP3Demo.exe or compile the project POP3Demo\POP3Demo.vbp
+
+
+For the latest version and for the complete documentation please visit http://www.evict.nl
