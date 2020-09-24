@@ -1,0 +1,150 @@
+<html>
+
+<head>
+<title>The NutCracker Sweet</title>
+<meta name="generator" content="Namo WebEditor">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="purple" alink="red">
+<p align="center"><b><span style="font-size:14pt;">The NutCracker Sweet</span></b></p>
+<p align="left"><font color="red"><b>(red denotes new features)</b></font></p>
+<ul>
+    <p align="left">This program is a combination of a few processes combined into one project. The idea was to develop an automated&nbsp;uncrackable (yeah right;) software registration process. I decided to use the serial number of the client's hard drive<font color="red"> (and the MAC Network Address) </font>as the registration method, but I needed to embed this within the actual distributed executable. My solution (which is a work in progress), was to construct an autoresponder which would search for a subject keyword with the serial number, write this to a module, re-compile the program with the module, zip the executable using Winzip and finally email this back to the client.</p>
+    <p align="left">The complete process is as follows:</p>
+    <ul>
+        <ol>
+            <li align="left">
+                <div align="left">Write your distributable project</div>
+                        </li>
+            <li align="left">
+                <div align="left">Instead of using your actual project executable, you will rename my program as&nbsp;your <b><i>e</i></b><i><b>xecutable.exe</b></i> name, &nbsp;generate an installation project, registering your controls and establishing the installation directory&nbsp;and send it to your client in your installation (exe/msi) package. </div>
+            </li>
+            <li align="left">
+                <div align="left">When he/she/it installs and runs the program, it will</div>
+                        </li>
+            <ul>
+                <li align="left">
+                    <div align="left">check the c:\ serial number,</div>
+                </li>
+                <ul>
+                    <li align="left">
+                        <div align="left"><font color="red"><i>This number can be changed when one re-formats the harddrive</i></font></div>
+                    </li>
+                </ul>
+                <li align="left">
+                    <div align="left"><font color="red">Check ipconfig /all for the MAC address. This was the only way that I was able to get this address on my machine. I understand that this value is supposed to be stored in the registry, but not in mine. [I have 2 Ethernet cards.] &nbsp;Likewise, despite the fact that this address is hard-coded, one may supposedly write a different value to the registry:</font></div>
+                </li>
+                <ul>
+                    <li class=Verdana><font size="2" color="red"><i>&quot;This software just writes an value into the 
+windows registry. When the Network Adapter Device is enabled, windows searches 
+for the registry value 'NetworkAddress' in the key 
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1- 08002bE10318}\[ID of NIC e.g. 0001]. If a value is present, windows 
+will use it as MAC address, if not, windows will use the hard coded manufacturer 
+provided MAC address. Simple? Some Network Adapter drivers have this facility 
+built-in. It can be found in the Advance settings tab in the Network Adapter's 
+Device properties in Windows Device Manager.</i></font><i><font color="red">&nbsp;(</font><a href="http://tmac.technitium.com/tmac/index.html">http://tmac.technitium.com/tmac/index.html</a></i><font color="red"><i>) He provides a free utility to do this.</i></font></li>
+                </ul>
+                <li align="left">
+                    <div align="left">Check the installation directory and drive</div>
+                                                                </li>
+                <li align="left">
+                    <div align="left">record the IP address (internal <strike><font color="red">and external</font></strike><font color="red"> this was too difficult as it involved using a webbrowser and WebBrowser1.Navigate &quot;http://www.whatismyip.com&quot;&nbsp;which&nbsp;was&nbsp;inconsistent                                </font>),</div>
+                </li>
+                <li align="left">
+                    <div align="left">record the name and address and phone number of the person (if provided)&nbsp;and</div>
+                                                                </li>
+                <li align="left">
+                    <div align="left">then email it back (the client will need to know their smtp address or they will have to manually email the information to you with the specific subject format). <font color="red">I've added the ability to send the information using a web-based email .asp application which may reside on your&nbsp;server (included) </font></div>
+                </li>
+                <li align="left">
+                    <div align="left"><font color="red">A password is only needed for the pop3 (receiving) end.</font></div>
+                                                                </li>
+            </ul>
+            <li align="left">
+                <div align="left">On your end, the autoresponder will be waiting. When it detects the message</div>
+                        </li>
+            <ul>
+                <li align="left">
+                    <div align="left">It extracts the serial number, <font color="red">(=++= the MAC Network Address) </font>                &nbsp;and other information.</div>
+                </li>
+                <li align="left">
+                    <div align="left">The serial number and <font color="red">(=++= the MAC Network Address) </font>                &nbsp;is converted from asc to chr$() format which will make it difficult for hackers to extract the number (but not impossible) <font color="red">[I've considered encrypting this information as well but this would necessitate embedding a decryption key which would be easily decodable by a hacker. I could encrypt the encryption key and convert it to chr() but that would be an infinite regress ;)]</font></div>
+                </li>
+                <li align="left">
+                    <div align="left">Embeds the information in a module (harddrive.bas)</div>
+                                </li>
+                <li align="left">
+                    <div align="left">Recompiles the program with the information and an algorithm to check the client serial number and compare it to the embedded one</div>
+                                </li>
+                <li align="left">
+                    <div align="left">It also checks to see if the executable resides in the installation directory and if not it will copy itself to the directory and overwrite the registration program</div>
+                                </li>
+                <li align="left">
+                    <div align="left">The program then zips the newly re-compiled exe</div>
+                                </li>
+                <li align="left">
+                    <div align="left">Finally it emails the zipped file back to the client who must unzip the file and run it in order to complete the registration process.</div>
+                                </li>
+            </ul>
+            <p align="center"><img src="NutCracker.gif" border="0"></p>
+            <p align="left"><font color="red">The project has been made more user friendly. &nbsp;One can now observe the Send and Receive status, dock and undock the windows, make all windows translucent and keep the application ontop. (I cannot capture the translucency for you to see.) &nbsp;One may also open the default email program from within the program. If one has Outlook and wants to effect a Send/Receive event see below.<sup>***</sup> One may specify the path to the vbp, the path to compile, the exe and the name of the zip file. If one wants to run the application in the IDE, uncheck the Recompile vbp (but make sure there is a compiled exe in the path) and it will skip the re-compile process which if the IDE is open as the program will freeze.</font></p>
+            <p align="center"><font color="red"><img src="img3.gif" border="0">&nbsp;</font></p>
+        </ol>
+    </ul>
+</ul>
+<p align="center"><img src="img2.gif" border="0"></p>
+<p align="center">This is both the registration program and the autoresponder.<br>
+To use it as the registration program which will be sent within your initial installation exe.&nbsp;<font color="red"><br>
+Simply make everything except the Send button, the SMTP Server field, Sender Name and Sender email invisible.<br>
+You will need to embed your recipient name and email address.</font></p>
+<ul>
+    <p align="left">In order to test the program, I suggest you send and receive the emails to/from yourself. I've set it up so that it points to this same vbp. Thus one must compile the project into an exe and then re-name the exe to something like Nutcracker.exe. The vb project must also be closed before running the Nutcracker.exe. This is because the program will recompile itself and need to overwrite the default: NutcrackerSweet.exe. You will need to customize the paths to your project when need be.</p>
+    <p align="left">I've borrowed from a number of sources to get the autoresponder to work properly. You will need to compile the 2 DLL's included within the project. vbSendMail.dll <span style='font-size:12.0pt'>Version 3.65 </span><span style='font-size:11.0pt;mso-bidi-font-size:12.0pt;
+font-weight:normal;mso-bidi-font-weight:bold'>by Dean Dusenbery &amp;
+FreeVBCode.com and </span>POP3 library, <a href="http://www.evict.nl/open_source.asp:">http://www.evict.nl/open_source.asp:</a> txtCodeId=62794 are greatly appreciated.</p>
+    <p align="left"><font color="red">***</font></p>
+    <p align="left"><font color="red"><b>To effect a send/receive event in Outlook you will need these references in your project:</b></font></p>
+    <p align="center"><font color="red"><img src="img1.gif" border="0"></font></p>
+    <p align="left"><font color="red"><b>Then simply call this function:</b></font></p>
+    <ul>
+        <ul>
+            <p align="left"><font color="blue">Public Function SendReceiveAll() As Boolean<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim oExplorer As Outlook.Explorer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim olNS As Outlook.NameSpace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim olFolder As Outlook.MAPIFolder<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim oCtl As Office.CommandBarControl<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim oPop As Office.CommandBarPopup<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim oNS As Outlook.NameSpace<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim oCB As Office.CommandBar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Dim oOutlookApplication As Outlook.Application<br>
+&nbsp;&nbsp;&nbsp;&nbsp;On Error Resume Next<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Set oOutlookApplication = GetObject(, &quot;Outlook.Application&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;If oOutlookApplication Is Nothing Then<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Err.Clear<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On Error GoTo ErrorHandler<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set oOutlookApplication = _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CreateObject(&quot;Outlook.Application&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set olNS = oOutlookApplication.GetNamespace(&quot;MAPI&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set olFolder = olNS.GetDefaultFolder(olFolderInbox)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set oExplorer = olFolder.GetExplorer<br>
+&nbsp;&nbsp;&nbsp;&nbsp;End If<br>
+</font></p>
+            <p align="left"><font color="blue">&nbsp;&nbsp;&nbsp;&nbsp;On Error GoTo ErrorHandler<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Set oCB = _<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;oOutlookApplication.ActiveExplorer.CommandBars(&quot;Standard&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Set oCtl = oCB.Controls(&quot;Send/Receive&quot;)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;oCtl.Execute<br>
+&nbsp;&nbsp;&nbsp;SendReceiveAll = True<br>
+ErrorHandler:<br>
+End Function</font></p>
+        </ul>
+    </ul>
+
+
+
+
+
+</ul>
+</body>
+
+</html>
